@@ -53,21 +53,21 @@ Once you have installed the moosefun package as described above, open an R sessi
 	
 #### results: "mypvs" will contain a list of 4 objects:
 	
-	1. iPV_table -- a data.frame containing:
+	1. mypvs$iPV_table -- a data.frame containing:
 		- the PVs identifiers
 		- the variance explained by the PV for its cluster of features|variables
 		- a single character containing all feature IDs in the PVs cluster (as found in PV_cluster_members), written as "ID1:ID2:ID3:"
-	2. PV_cluster_members -- a list providing all feature|variable ids in each cluster, supplied as a vector.
-	3. PVresults -- a list providing all of the PVA results for each cluster in PV_cluster_members
-	4. workingdata -- a list returning your:
-			- provided dataset
-			- its correlation matrix
-			- its distance matrix
-			- the initial tree of the complete dataset
-			- eigenvalues derived from the correlation matrix
-			- pca derived from the correlation matrix
-			- varexp in PCA
-			- and estimates of Me, the effective number of markers. 
+	2. mypvs$PV_cluster_members -- a list providing all feature|variable ids in each cluster, supplied as a vector.
+	3. mypvs$PVresults -- a list providing all of the PVA results for each cluster, as a data.frame  in PV_cluster_members
+	4. mypvs$workingdata -- a list returning your:
+			- mypvs$workingdata$variabledata == provided dataset
+			- mypvs$workingdata$cormat == its correlation matrix
+			- mypvs$workingdata$distmat == its distance matrix
+			- mypvs$workingdata$tree == the initial tree of the complete dataset
+			- mypvs$workingdata$eigenvalues == eigenvalues derived from the correlation matrix
+			- mypvs$workingdata$pca == pca derived from the correlation matrix
+			- mypvs$workingdata$varexp == varexp in PCA
+			- mypvs$workingdata$simpleM == and estimates of Me, the effective number of markers. 
 
 #### plot your tree with some color coding for the iPVs
 	
