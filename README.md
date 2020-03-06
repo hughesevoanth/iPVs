@@ -26,11 +26,6 @@ This suite of scripts can help you identify a set of independent features or var
 Once you have installed the moosefun package as described above, open an R session and follow the example below for a relatively straight forward run through of the iPVs pipeline using a single wrapper function. 
 
 #### iPVs()
-
-	## load some needed packages
-	library(moosefun)
-	library(Hmisc)
-	library(tidyverse)
 	
 	## load your dataset (mine is a flat text file tab-delimited)
 	n = "pathtomydataset/mydataset.txt"
