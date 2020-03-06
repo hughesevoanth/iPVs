@@ -25,7 +25,7 @@ PVA <- function(responses, data, nvarselect = NULL, p.variance = 1, include = NU
     stop("At least one name in responses is not in data")
   
   #Get correlation matrix
-  R <- rcorr(as.matrix(data[responses]))$r
+  R <- Hmisc::rcorr(as.matrix(data[responses]))$r
   
   #Initialize
   nvar <- nrow(R)
