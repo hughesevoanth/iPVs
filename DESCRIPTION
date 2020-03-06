@@ -1,0 +1,14 @@
+Package: iPVs
+Version: 0.01
+Date: 2020-03-06
+Title: Identification of principal variables and an estimate of the number of variables in a data set. 
+Description: Data reduction, representative|independent variable count, and identification of principal variables in complex inter-correlated data sets.
+Author: David A Hughes <hughes.evoanth@gmail.com>
+Maintainer: David A Hughes <hughes.evoanth@gmail.com>
+Depends: R (>= 3.2)
+License: CC0
+Imports:
+	tidyverse,
+	RColorBrewer,
+	Hmisc
+RoxygenNote: 7.0.2
