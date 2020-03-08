@@ -6,6 +6,7 @@
 #' @param cormat your correlation matrix
 #' @param distmat your distance matrix
 #' @param cutheight the height at which you wish to cut your tree 
+#' @param hclust_meth method used in hclust
 #' @keywords principal variables, tree cut
 #' @export
 #' @examples

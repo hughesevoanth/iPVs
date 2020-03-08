@@ -15,7 +15,6 @@ Kcluster_PVs = function( variabledata, Kmembers, myPVs ){
   PVresults = list()
   
   for(i in 1:length(Kmembers)){
-    print(i)
     ## variable IDs
     n = Kmembers[[i]]
     ###
