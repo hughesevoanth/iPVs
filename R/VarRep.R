@@ -2,14 +2,15 @@
 #'
 #' This function estimates how much of the total variance can be explained by each variable independently, in turn
 #' @param wdata a data frame with your variable in columns and samples in rows.
+#' @param cor_method the type of regression to perform
 #' @keywords PVA, principal variables, variance explained
 #' @export
 #' @examples
 #' VarRep()
-VarRep <- function(wdata, reg_type = "spearman"){
+VarRep <- function(wdata, cor_method = "spearman"){
 
 	## build a correaltion matrix based on Spearman's regression
-	R <- Hmisc::rcorr(as.matrix( wdata ), type = reg_type )$r
+	R <- Hmisc::rcorr(as.matrix( wdata ), type = cor_method )$r
 	## the sum of R-squared
 	sumR2 = colSums(R*R)
 
