@@ -2,6 +2,9 @@
 #'
 #' A super function that runs through all of the necessary staeps for you to identify Independent Principal Variables
 #' @param variabledata a data.frame of the variable data used to build your cormat and hclust tree
+#' @param cor_method the correlation method used to construct the correlation matrix
+#' @param dist_method the distance method to generate the distance matrix
+#' @param hclust_meth the clustering method used by hclust
 #' @param cutheight tree cut height. Value is equal to a dissimilarity of 1 - Spearman's rho.
 #' @keywords data reduction, independent variables, principal variables, tree cut
 #' @export
