@@ -6,22 +6,43 @@
 #' @export
 #' @examples
 #' tree.builder()
-tree.builder = function( wdata ){
+tree.builder = function( wdata, cor_method = "spearman", dist_method = "R2", hclust_meth = "average"  ){
     
     ## number of variables
     M = ncol(wdata)
 
     ## estimate correlation matrix
     cat("1. estimating pairwsie correlations\n")
-    cmat = cor(wdata, use = "pairwise.complete.obs", method = "spearman")
+    cmat = cor(wdata, use = "pairwise.complete.obs", method = cor_method, )
 
     ## estiamte a distance matrix
     cat("2. constructing distance matrix\n")
-    dmat = as.dist(1 - abs( cmat ) )
+    if(dist_method == "R2"){
+        dmat = as.dist(1 - (cmat * cmat) )    
+    } else {
+        if(dist_method == "R"){
+            dmat = as.dist(1 - abs( cmat ) )    
+        } else { 
+            stop("The dist_method must be either 'R' (1-abs(R)) or 'R2' (R*R).")
+        }
+    }
+    
 
     ## generate a hclust dendrogram
     cat("3. generating dendrogram\n")
-    tree = hclust(dmat,  method = "complete")
+    if(hclust_meth == "complete"){
+        tree = hclust(dmat,  method = "complete")
+    } else {
+        if(hclust_meth == "average"){
+            tree = hclust(dmat,  method = "average")
+        } else { 
+            if(hclust_meth == "mcquitty"){
+                tree = hclust(dmat,  method = "mcquitty")
+            } else { 
+                stop("The hclust_meth must be either 'complete' (max dist), 'average' (UPGMA), or 'mcquitty' (WPGMA).")
+            }
+        }
+    }
 
     ## eigenvalues
     cat("4. estimating eigenvalues\n")
@@ -30,14 +51,22 @@ tree.builder = function( wdata ){
     ## PCA
     cat("5. estimating principal components\n")
     pca = prcomp(cmat, center = TRUE, scale = TRUE)
-    
+        #eigenvalues = summary(pca)[[6]][2, ]
     varexp = t(summary(pca)[[6]][2:3, ])
     
+    ## effective number of markers
+        ## Goa 2008
     m95 = length(which(varexp[,2] < 0.95))+1
     m995 = length(which(varexp[,2] < 0.995))+1
-    Me = M*(1 - ( M-1 ) * ( var(eigenvalues)/M^2 ) )
+        ## Cheverud 2001
+    Me = round( M*(1 - ( M-1 ) * var(eigenvalues)/M^2  ) )
+        ## Li and Ji 2005
+    ve = varexp
+    w = which(ve > 0.01)
+    ve[w] = 1
+    LJ_Me = round( sum(ve) )
     ##
-    simpleM = data.frame( M_95 = m95, M_995 = m995, Me = Me )
+    simpleM = data.frame( LiJi_Me = LJ_Me,  Cheverud_Me = Me, Goa_M_995 = m995,  Goa_M_95 = m95  )
     
     ## data out
     out = list(variabledata = wdata, cormat = cmat, distmat = dmat, tree = tree, 

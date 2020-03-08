@@ -4,7 +4,14 @@
 \alias{ind.pvs}
 \title{A function to identify and extract the principal variables in your dataset.}
 \usage{
-ind.pvs(variabledata, tree, cormat, distmat, cutheight)
+ind.pvs(
+  variabledata,
+  tree,
+  cormat,
+  distmat,
+  cutheight,
+  hclust_meth = "average"
+)
 }
 \arguments{
 \item{variabledata}{a data.frame of the variable data used to build your cormat and hclust tree}

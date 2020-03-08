@@ -4,12 +4,14 @@
 \alias{Kcluster_PVs}
 \title{A function to identify the Principal Variable of a group}
 \usage{
-Kcluster_PVs(variabledata, Kmembers)
+Kcluster_PVs(variabledata, Kmembers, myPVs)
 }
 \arguments{
 \item{variabledata}{a data.frame of the variable data used to build your cormat and hclust tree}
 
 \item{Kmembers}{a list, where each object in the list is a vector of variable IDs, identifying the members of a cluster or group.}
+
+\item{myPVs}{a vector of my Principal Variable (myPVs) for each cluster}
 }
 \description{
 A function to identify the Principal Variable of a group. The final step in the iPVs pipeling to identify the final PV to stand as the tagging and independent variable for the cluster of variables.

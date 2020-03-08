@@ -8,7 +8,7 @@
 #' @export
 #' @examples
 #' treecut.pvs()
-treecut.pvs = function( tree, variabledata , cutheight){
+treecut.pvs = function( tree, variabledata , cutheight ){
   ##############  check for hclust object
   if(class(tree) != "hclust"){
     stop("You must pass a hclust object as the tree variable")
@@ -24,9 +24,9 @@ treecut.pvs = function( tree, variabledata , cutheight){
   if( class(cutheight) != "numeric" |  cutheight < 0 | cutheight > 1 ){
     stop("You must pass a single, cutheigth float no smaller than 0 and no larger than 1.")
   }
-  ############## Produce a warning if the hclust method used was not "complete".
-  if( tree$method != "complete" ){
-    warning( paste0("It is advised to use the hclust method complete. You used the method ", tree$method, ".") )
+  ############## Produce a warning if the hclust method used was not "complete", "average", or "mcquitty".
+  if( !tree$method %in% c( "complete" ,"average","mcquitty") ){
+    warning( paste0("It is advised to use the hclust method 'complete', 'average', or 'mcquitty.' You used the method ", tree$method, ".") )
   }
   ###############
   ## cut tree
@@ -37,18 +37,24 @@ treecut.pvs = function( tree, variabledata , cutheight){
   groupKs = as.numeric( names( which( table(k) > 1 ) ) )
   ## iterate of goupKs to identify a Principal Variable
   if(length(groupKs) > 0){
-  pvs = t( sapply(groupKs, function(i){
-    n = names( which(k == i) )
-    tempd = variabledata[, n]
-    ##
-    topPV =  PVA( names(tempd), tempd)
-    out = data.frame(k = i, clusN = table(k)[i],  PV = as.character(topPV$Selected)[1], VarExp = topPV$Added.Propn[1])
-    return(out)
-    }) )
-  ## redefine pvs as a proper data.frame without built in lists :-( 
-  pvs = data.frame(k = as.numeric(unlist(pvs[,1])), clusN = as.numeric(unlist(pvs[,2])), 
-    PV = as.character(unlist(pvs[,3])), VarExp =  as.numeric(unlist(pvs[,4])))
-  } else {
+    pvs = t( sapply(groupKs, function(i){
+      n = names( which(k == i) )
+      if(length(n)>1){
+        tempd = variabledata[, n]
+        ##
+        #topPV =  PVA( names(tempd), tempd)
+        topPV = VarRep(tempd)
+        out = data.frame(k = i, clusN = table(k)[i],  PV = as.character(topPV$variable)[1], VarExp = topPV$added_vexp[1])
+        } else {
+          out = data.frame(k = i, clusN = table(k)[i], PV = n, VarExp = 1)
+        }
+      return(out)
+      }) )
+
+    ## redefine pvs as a proper data.frame without built in lists :-( 
+    pvs = data.frame(k = as.numeric(unlist(pvs[,1])), clusN = as.numeric(unlist(pvs[,2])), 
+      PV = as.character(unlist(pvs[,3])), VarExp =  as.numeric(unlist(pvs[,4])))
+    } else {
     pvs = data.frame( )
   }
   ##  build data frame for all single variable K groups

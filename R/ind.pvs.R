@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #' ind.pvs()
-ind.pvs = function( variabledata, tree, cormat, distmat, cutheight){
+ind.pvs = function( variabledata, tree, cormat, distmat, cutheight, hclust_meth = "average" ){
   TC_iteration = list()
   nomoreclusters = 0
   ### while loop
@@ -21,7 +21,8 @@ ind.pvs = function( variabledata, tree, cormat, distmat, cutheight){
     
     cat("Tree cut and PV identifier iteration ", i, "\n")
     ## set a seed
-    set.seed(20200224)
+    ## set.seed(20200224)
+    
     ## identify the Principal Variables (PVs)
     PVs = treecut.pvs( tree = tree, variabledata = variabledata, cutheight = cutheight)
     
@@ -36,7 +37,7 @@ ind.pvs = function( variabledata, tree, cormat, distmat, cutheight){
     newdistmat = as.dist(as.matrix( distmat )[n, n])
     
     ## estiamte a new hclust tree
-    tree = hclust(newdistmat,  method = "complete")
+    tree = hclust(newdistmat,  method = hclust_meth )
     
     ## estimate the number of clusters in this new tree using only the PVs
     k = table( stats::cutree(tree, h = cutheight) )

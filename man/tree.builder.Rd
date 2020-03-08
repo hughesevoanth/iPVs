@@ -4,7 +4,12 @@
 \alias{tree.builder}
 \title{A superfunction to estimate correlations and relationships among variables in a data set.}
 \usage{
-tree.builder(wdata)
+tree.builder(
+  wdata,
+  cor_method = "spearman",
+  dist_method = "R2",
+  hclust_meth = "average"
+)
 }
 \arguments{
 \item{variabledata}{a vector of class categorical, for all elements tested, identifying a category | or bin | box that each element belong to}

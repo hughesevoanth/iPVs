@@ -4,7 +4,13 @@
 \alias{iPVs}
 \title{A super function that runs through all of the necessary staeps for you to identify Independent Principal Variables}
 \usage{
-iPVs(variabledata, cutheight = 0.5)
+iPVs(
+  variabledata,
+  cor_method = "spearman",
+  dist_method = "R2",
+  hclust_meth = "average",
+  cutheight = 0.5
+)
 }
 \arguments{
 \item{variabledata}{a data.frame of the variable data used to build your cormat and hclust tree}

@@ -25,8 +25,8 @@ treecut.sumstats = function( tree, cormat, cutheight ){
     stop("You must pass a single, cutheigth float no smaller than 0 and no larger than 1.")
   }
   ############## Produce a warning if the hclust method used was not "complete".
-  if( tree$method != "complete" ){
-    warning( paste0("It is advised to use the hclust method complete. You used the method ", tree$method, ".") )
+  if( !tree$method %in% c( "complete" ,"average","mcquitty") ){
+    warning( paste0("It is advised to use the hclust method 'complete', 'average', or 'mcquitty.' You used the method ", tree$method, ".") )
   }
   ############## perform tree cut
   k = stats::cutree(tree, h = cutheight)

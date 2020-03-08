@@ -2,8 +2,7 @@
 
 export(Kcluster.groups)
 export(Kcluster_PVs)
-export(PVA)
-export(S22update)
+export(VarRep)
 export(iPVs)
 export(ind.pvs)
 export(tree.builder)
