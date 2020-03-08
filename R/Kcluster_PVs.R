@@ -28,9 +28,11 @@ Kcluster_PVs = function( variabledata, Kmembers, myPVs ){
       ###
       PVtable = rbind( PVtable, PV2pass )
     } else {
-      PV2pass = data.frame( variable = n,  VarExp_individually = 1, added_vexp = 1,  PVArank = 1)
+      PV = data.frame(variable = n, initial_sumR2 = 1, VarExp_individually = 1, added_vexp = 1,  cum_vexp = 1 )
+      PV2pass = data.frame( PV[w, c(1,3,4) ], PVArank = 1 )
       ##
       PVtable = rbind( PVtable, PV2pass )
+      ##
     }
     ####
     PVresults[[i]] = PV

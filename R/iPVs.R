@@ -24,6 +24,8 @@ iPVs = function( variabledata, cor_method = "spearman", dist_method = "R2", hclu
   cutheight = cutheight, 
   hclust_meth = hclust_meth )
 
+  ## the last tree cut iteration defines our 
+  ## data sets PVs
   ## the PVs identified for your data set
   mypvs = as.character( StudyPVs$PVs$pvs[,"PV"] )
 
@@ -41,9 +43,13 @@ iPVs = function( variabledata, cor_method = "spearman", dist_method = "R2", hclu
   ## place all of the useful data
   ## in a final table
   ##############################
-  cat(paste0("(V) Generate summary table with PVs, cluster members, and variance explained.\n"))
-  clustersize = unlist( lapply(PV_cluster_members, length) )
-  groupmembers = unlist( lapply(PV_cluster_members, function(x){ paste(x, collapse = ":") } ) )
+  #cat(paste0("(V) Generate summary table with PVs, cluster members, and variance explained.\n"))
+  #clustersize = unlist( lapply(PV_cluster_members, length) )
+  #groupmembers = unlist( lapply(PV_cluster_members, function(x){ paste(x, collapse = ":") } ) )
+  
+  cat(paste0("(V) Generate summary table with PVs, and variance explained.\n"))
+  clustersize = unlist( lapply(Final_PVA_results$PVresults, nrow) )
+  
   
   iPV_table = data.frame(PVs = Final_PVA_results$PVtable$variable , 
     clustersize = clustersize,
