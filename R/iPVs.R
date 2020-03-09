@@ -18,6 +18,8 @@ iPVs = function( variabledata, cor_method = "spearman", dist_method = "R2", hclu
   
   PVlistout = lapply(cutheight, function(CH){    
       ## identify the PVs (independent principal variables)
+      cat(paste0("\n -- processing cut height ", CH , " \n\n"))
+
       cat(paste0("(II) ind.pvs -- identify independent clusters and initial principal variables\n"))
       StudyPVs = ind.pvs( variabledata = wdata$variabledata,
       tree = wdata$tree,

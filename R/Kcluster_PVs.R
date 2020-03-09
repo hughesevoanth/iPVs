@@ -23,13 +23,19 @@ Kcluster_PVs = function( variabledata, Kmembers, myPVs ){
       tempd = variabledata[, n]
       ## PVA analysis 
       PV = VarRep(tempd)
+      ## Which PV is my PV ?
       w = which( PV$variable == myPVs[i] )
-      PV2pass = data.frame( PV[w, c(1,3,4) ], PVArank = w )
+      ## rank by Variance Explained individually
+      o = order( PV$VarExp_individually, decreasing = TRUE )
+      temp = PV[o,]
+      q = which(temp$variable == myPVs[i] ); rm(temp)
+      ##
+      PV2pass = data.frame( PV[w, c(1,3,4) ], PVArank = w, ind_VarExp_rank = q  )
       ###
       PVtable = rbind( PVtable, PV2pass )
     } else {
       PV = data.frame(variable = n, initial_sumR2 = 1, VarExp_individually = 1, added_vexp = 1,  cum_vexp = 1 )
-      PV2pass = data.frame( PV[, c(1,3,4) ], PVArank = 1 )
+      PV2pass = data.frame( PV[, c(1,3,4) ], PVArank = 1, ind_VarExp_rank = 1 )
       ##
       PVtable = rbind( PVtable, PV2pass )
       ##
