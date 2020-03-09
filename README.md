@@ -51,7 +51,7 @@ Once you have installed the moosefun package as described above, open an R sessi
 		cor_method = "spearman", 				## you can choose spearman or pearson
 		dist_method = "R2", 					## you can choose 'R' (1-abs(R)) or 'R2' (R*R)
 		hclust_meth = "average", 				## you can choose 'complete', 'average' (UPGMA), or 'mcquitty' (WPGMA)
-		cutheight  = c(0.2, 0.3, 0.4, 0.5) 		## 1 or a series of cut heights
+		cutheight  = c(0.2, 0.3, 0.4, 0.5) 			## 1 or a series of cut heights
 		)
 	
 	## Done !
@@ -67,14 +67,14 @@ Once you have installed the moosefun package as described above, open an R sessi
 	2. mypvs$PV_cluster_members -- a list providing all feature|variable ids in each cluster, supplied as a vector.
 	3. mypvs$PVresults -- a list providing all of the PVA results for each cluster, as a data.frame  in PV_cluster_members
 	4. mypvs$workingdata -- a list returning your:
-			- mypvs$workingdata$variabledata == provided dataset
-			- mypvs$workingdata$cormat == its correlation matrix
-			- mypvs$workingdata$distmat == its distance matrix
-			- mypvs$workingdata$tree == the initial tree of the complete dataset
-			- mypvs$workingdata$eigenvalues == eigenvalues derived from the correlation matrix
-			- mypvs$workingdata$pca == pca derived from the correlation matrix
-			- mypvs$workingdata$varexp == varexp in PCA
-			- mypvs$workingdata$simpleM == and estimates of Me, the effective number of markers. 
+		- mypvs$workingdata$variabledata == provided dataset
+		- mypvs$workingdata$cormat == its correlation matrix
+		- mypvs$workingdata$distmat == its distance matrix
+		- mypvs$workingdata$tree == the initial tree of the complete dataset
+		- mypvs$workingdata$eigenvalues == eigenvalues derived from the correlation matrix
+		- mypvs$workingdata$pca == pca derived from the correlation matrix
+		- mypvs$workingdata$varexp == varexp in PCA
+		- mypvs$workingdata$simpleM == and estimates of Me, the effective number of markers. 
 
 #### plot your tree with some color coding for the iPVs
 	
