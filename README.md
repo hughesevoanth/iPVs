@@ -41,17 +41,29 @@ Once you have installed the moosefun package as described above, open an R sessi
 	## as we will be using the non-parametric 
 	## Spearman's rank correlation. 
 	
-	## A quick and easy wrapper function to do everything for you is:
-	mypvs = iPVs(wdata)
+	#######################################
+	## A quick and easy wrapper function to
+	## do everything for you is:
+	#######################################
+	## a series of cut heights
+	s = seq(0.1, 0.5, by = 0.1)
+	mypvs = iPVs(wdata, 
+		cor_method = "spearman", 				## you can choose spearman or pearson
+		dist_method = "R2", 					## you can choose 'R' (1-abs(R)) or 'R2' (R*R)
+		hclust_meth = "average", 				## you can choose 'complete', 'average' (UPGMA), or 'mcquitty' (WPGMA)
+		cutheight  = c(0.2, 0.3, 0.4, 0.5) 		## 1 or a series of cut heights
+		)
 	
 	## Done !
 	
 #### results: "mypvs" will contain a list of 4 objects:
 	
 	1. mypvs$iPV_table -- a data.frame containing:
-		- the PVs identifiers
-		- the variance explained by the PV for its cluster of features|variables
-		- a single character containing all feature IDs in the PVs cluster (as found in PV_cluster_members), written as "ID1:ID2:ID3:"
+		- PVs: the PVs identifier
+		- clustersize: the number of variables in the cluster
+		- VarExp_by_PV: the variance explained by the PV for its cluster of features|variables
+		- ind_VarExp_rank: the rank of your PV in its informativness, individually, relative to all other variables in the cluster. This is a ranking of VarExp_by_PV as presented in mypvs$PVresults
+		- PVArank: the rank of your PV in the PVA results as presented in mypvs$PVresults
 	2. mypvs$PV_cluster_members -- a list providing all feature|variable ids in each cluster, supplied as a vector.
 	3. mypvs$PVresults -- a list providing all of the PVA results for each cluster, as a data.frame  in PV_cluster_members
 	4. mypvs$workingdata -- a list returning your:
