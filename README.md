@@ -101,6 +101,41 @@ Once you have installed the moosefun package as described above, open an R sessi
 	## plot the dendrogram
 	dend %>% plot(main = paste0( "-- Principle Variables --" ) )
 	abline(h = 0.5, col = "red", lwd = 3)
+	
+If you run iPVs() with multiple cutheights then you can use an lapply() function to generate your dendrograms as follows:
+
+	mydends = lapply(mypvs, function(x){
+		## extract the IDs for your PVs
+		pv_ids = as.character(x$iPV_table$PVs )
+
+		## define your tree as a dendrogram
+		dend = x$workingdata$tree %>% as.dendrogram
+
+		## create a vector of colors to color your tree labels
+		n = labels(dend)
+		pcol = rep("black", length(n))
+		w = which(n %in% pv_ids ); pcol[w] = "medium blue"
+
+		## redefine elements of dendrogram
+		dend = dend %>% 
+		set("labels_cex", 0.5) %>% 
+		set("labels_col", pcol) %>% 
+		set("branches_k_color",  value = pcol)
+
+		## return dendrogram
+		return(dend)
+	})
+	
+## plot the dendrograms
+
+	## plot 1st dendrogram
+	mydends[[1]] %>% plot(main = paste0( "-- Principle Variables --" ) )
+	abline(h = 0.2, col = "red", lwd = 3)
+	
+	## plot 2nd dendrogram
+	mydends[[2]] %>% plot(main = paste0( "-- Principle Variables --" ) )
+	abline(h = 0.3, col = "red", lwd = 3)
+
 
 #### alternative - long hand
 
