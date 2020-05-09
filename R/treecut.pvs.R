@@ -26,7 +26,7 @@ treecut.pvs = function( tree, variabledata , cutheight ){
   }
   ############## Produce a warning if the hclust method used was not "complete", "average", or "mcquitty".
   if( !tree$method %in% c( "complete" ,"average","mcquitty") ){
-    warning( paste0("It is advised to use the hclust method 'complete', 'average', or 'mcquitty.' You used the method ", tree$method, ".") )
+    warning( paste0("It is advised to use the hclust method 'complete', 'average', or 'mcquitty'. You used the method ", tree$method, ".") )
   }
   ###############
   ## cut tree

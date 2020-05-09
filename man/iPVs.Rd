@@ -15,6 +15,12 @@ iPVs(
 \arguments{
 \item{variabledata}{a data.frame of the variable data used to build your cormat and hclust tree}
 
+\item{cor_method}{the correlation method used to construct the correlation matrix}
+
+\item{dist_method}{the distance method to generate the distance matrix}
+
+\item{hclust_meth}{the clustering method used by hclust}
+
 \item{cutheight}{tree cut height. Value is equal to a dissimilarity of 1 - Spearman's rho.}
 }
 \description{

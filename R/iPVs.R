@@ -58,6 +58,7 @@ iPVs = function( variabledata, cor_method = "spearman", dist_method = "R2", hclu
       iPV_table = data.frame(PVs = Final_PVA_results$PVtable$variable , 
         clustersize = clustersize,
         VarExp_by_PV = Final_PVA_results$PVtable$VarExp_individually,
+        ind_VarExp_rank = Final_PVA_results$PVtable$ind_VarExp_rank,
         PVArank = Final_PVA_results$PVtable$PVArank )
         #groupmembers = groupmembers )
 

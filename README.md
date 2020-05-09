@@ -76,6 +76,23 @@ Once you have installed the moosefun package as described above, open an R sessi
 		- mypvs$workingdata$varexp == varexp in PCA
 		- mypvs$workingdata$simpleM == and estimates of Me, the effective number of markers. 
 
+## Other estimates of the effective number of markers
+
+iPVs also estimates Me (the effective number of markers) following three other methods. Each of these methods derive their estimates from an eigen or principal component analysis of the data's correlation matrix. 
+
+1. J M Cheverud, Heredity, 2001. PMID:[11678987](11678987); [DOI]( https://doi.org/10.1046/j.1365-2540.2001.00901.x)
+	- Meff: 1 + (M - 1) * (1 - ( variance(eigenvalues)/M ))
+2. Li and Ji, Herdity, 2005. PMID:[16077740](16077740); [DOI](https://doi.org/10.1038/sj.hdy.6800717)
+	- Meff: estimated as the number of eigenvalues whose proportion of variance explained is greater than or equal to 1, plus the sum of all other eigenvlaues. 
+3. Goa et al, Genetic Epidemiology 2008. PMID:[18271029](18271029); [DOI](https://doi.org/10.1002/gepi.20310)
+	- simpleM: estimated as the number of eigenvalues that are needed to explain X% of the variance. Here iPVs provides estimates for 95% and 99.5% of the variance. 
+
+**These estimates can be extracted from your run of iPVs with:**
+	
+	> mypvs$workingdata$simpleM 
+
+## Plotting
+
 #### plot your tree with some color coding for the iPVs
 	
 	## load a needed R package
@@ -136,6 +153,7 @@ If you run iPVs() with multiple cutheights then you can use an lapply() function
 	mydends[[2]] %>% plot(main = paste0( "-- Principle Variables --" ) )
 	abline(h = 0.3, col = "red", lwd = 3)
 
+![](images/example_tree.png)
 
 #### alternative - long hand
 
@@ -145,7 +163,31 @@ If you would perfer to do everything step by step then feel free to print the fu
 
 and use its code to run through the steps of the pipeline. 
 
+---
+---
+# Illustrations from metabolomics data sets:
 
+### how the number of representitive features (Me) changes as the tree cut height increases
+
+#### - examples from a Nightingale and a Metabolon data set -
+
+![](images/Nigtingale_Metabolon_Me_by_cutheigt.png)
+
+The estimated number of effective markers, as determined by the methods of (1) Cheverud, (2) Li & Ji, and (3) Goa et al are printed at the bottom of each figure. 
+
+---
+
+#### Outcome for a tree cut height of 0.5 for a Nightingale and a Metabolon data sets.
+![](images/Nightingale_Metabolon_tree_cutheight50.png)
+
+---
+
+#### Illustrative contrast of a Nightingale data set at three different tree cut heights:
+- 0.2, 0.5, and 0.8
+
+![](images/Nightingale_tree_cutheight20_50_80.png)
+
+---
 ---
 ### Some  other functions in the iPVs suite include
 

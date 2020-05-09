@@ -23,6 +23,8 @@ ind.pvs(
 \item{distmat}{your distance matrix}
 
 \item{cutheight}{the height at which you wish to cut your tree}
+
+\item{hclust_meth}{method used in hclust}
 }
 \description{
 A function to identify and extract the principal variables in your dataset. The function will iterate over each newly generated list of PVs to insure that they do meet your tree cutheight standards.
