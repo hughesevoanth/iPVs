@@ -13,7 +13,7 @@ tree.builder = function( wdata, cor_method = "spearman", dist_method = "R2", hcl
 
     ## estimate correlation matrix
     cat("1. estimating pairwsie correlations\n")
-    cmat = cor(wdata, use = "pairwise.complete.obs", method = cor_method, )
+    cmat = cor(wdata, use = "pairwise.complete.obs", method = cor_method )
 
     ## estiamte a distance matrix
     cat("2. constructing distance matrix\n")
@@ -45,11 +45,11 @@ tree.builder = function( wdata, cor_method = "spearman", dist_method = "R2", hcl
     }
 
     ## eigenvalues
-    cat("4. estimating eigenvalues\n")
+    cat("4. estimating eigenvalues from correlation matrix\n")
     eigenvalues = eigen(cmat, symmetric = TRUE)$values
 
     ## PCA
-    cat("5. estimating principal components\n")
+    cat("5. estimating principal components from correlation matrix\n")
     pca = prcomp(cmat, center = TRUE, scale = TRUE)
         #eigenvalues = summary(pca)[[6]][2, ]
     varexp = t(summary(pca)[[6]][2:3, ])
@@ -59,18 +59,23 @@ tree.builder = function( wdata, cor_method = "spearman", dist_method = "R2", hcl
     m95 = length(which(varexp[,2] < 0.95))+1
     m995 = length(which(varexp[,2] < 0.995))+1
         ## Cheverud 2001
-    Me = round( M*(1 - ( M-1 ) * var(eigenvalues)/M^2  ) )
+    eigen_var = var(eigenvalues)
+    Meff = round( 1 + (M-1) * (1 - (eigen_var / M)) )
         ## Li and Ji 2005
-    ve = varexp
+    ve = varexp[,1]
     w = which(ve > 0.01)
     ve[w] = 1
     LJ_Me = round( sum(ve) )
     ##
-    simpleM = data.frame( LiJi_Me = LJ_Me,  Cheverud_Me = Me, Goa_M_995 = m995,  Goa_M_95 = m95  )
+    simpleM = data.frame( Cheverud_Me = Meff, LiJi_Me = LJ_Me,   Goa_M_95 = m95 , Goa_M_995 = m995   )
     
     ## data out
-    out = list(variabledata = wdata, cormat = cmat, distmat = dmat, tree = tree, 
-      eigenvalues = eigenvalues, pca = pca, varexp = varexp, simpleM = simpleM)
+    out = list( variabledata = wdata, 
+        cormat = cmat, distmat = dmat, tree = tree, 
+        pca = pca, eigenvalues = eigenvalues,  varexp = varexp, simpleM = simpleM
+       )
     ## return data
     return(out)
 }
+
+
