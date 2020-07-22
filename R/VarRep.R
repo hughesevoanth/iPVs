@@ -40,7 +40,7 @@ VarRep <- function(wdata, cor_method = "spearman"){
 			nvar <- nrow(iterR)
 			## sum of R-squared
 			sumR2 = colSums(iterR*iterR)
-			max_v = which(sumR2 == max(sumR2))
+			max_v = which(sumR2 == max(sumR2))[1] ## july 22nd
 			var_name = names(sumR2)[max_v]
 			## total var
 			v = iterR[max_v,-max_v]
