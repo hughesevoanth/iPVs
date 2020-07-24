@@ -10,7 +10,7 @@
 #' @export
 #' @examples
 #' iPVs()
-iPVs = function( variabledata, cor_method = "spearman", dist_method = "R2", hclust_meth = "average", cutheight = 0.5 ){
+iPVs = function( variabledata, cor_method = "spearman", dist_method = "R", hclust_meth = "complete", cutheight = 0.5 ){
 
   ## estiamte correlation matrix, build tree, generate PCA from correlation matrix
   cat(paste0("(I) tree.builder -- \n"))
