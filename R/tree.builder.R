@@ -14,8 +14,10 @@ tree.builder = function( wdata, cor_method = "spearman", dist_method = "R2", hcl
     ## estimate correlation matrix
     cat("1. estimating pairwsie correlations\n")
     cmat = cor(wdata, use = "pairwise.complete.obs", method = cor_method )
+    ## turn NAs into 0 values
+    cmat[is.na(cmat)] = 0
 
-    ## estiamte a distance matrix
+    ## estimate a distance matrix
     cat("2. constructing distance matrix\n")
     if(dist_method == "R2"){
         dmat = as.dist(1 - (cmat * cmat) )    
