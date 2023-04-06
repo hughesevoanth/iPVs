@@ -6,16 +6,24 @@
 #' @export
 #' @examples
 #' tree.builder()
-tree.builder = function( wdata, cor_method = "spearman", dist_method = "R2", hclust_meth = "average"  ){
+tree.builder = function( wdata, cor_method = "spearman", dist_method = "R", hclust_meth = "average", cmat = NULL ){
     
     ## number of variables
     M = ncol(wdata)
 
     ## estimate correlation matrix
-    cat("1. estimating pairwsie correlations\n")
-    cmat = cor(wdata, use = "pairwise.complete.obs", method = cor_method )
-    ## turn NAs into 0 values
-    cmat[is.na(cmat)] = 0
+    if( is.null(cmat) ){
+      ## number of variables
+      M = ncol(wdata)
+      
+      cat("1. estimating pairwsie correlations\n")
+        cmat = cor(wdata, use = "pairwise.complete.obs", method = cor_method )
+        ## turn NAs into 0 values
+        cmat[is.na(cmat)] = 0
+    } else {
+      cat("1. pairwsie correlation matrix provided by user\n")
+      M = ncol(cmat)
+    }
 
     ## estimate a distance matrix
     cat("2. constructing distance matrix\n")

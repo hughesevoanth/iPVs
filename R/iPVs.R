@@ -10,11 +10,11 @@
 #' @export
 #' @examples
 #' iPVs()
-iPVs = function( variabledata, cor_method = "spearman", dist_method = "R", hclust_meth = "complete", cutheight = 0.5 ){
+iPVs = function( variabledata, cor_method = "spearman", dist_method = "R", hclust_meth = "complete", cutheight = 0.5, cmat = NULL ){
 
-  ## estiamte correlation matrix, build tree, generate PCA from correlation matrix
+  ## estimate correlation matrix, build tree, generate PCA from correlation matrix
   cat(paste0("(I) tree.builder -- \n"))
-  wdata = tree.builder(variabledata, cor_method = cor_method, dist_method = dist_method, hclust_meth = hclust_meth )
+  wdata = tree.builder(variabledata, cor_method = cor_method, dist_method = dist_method, hclust_meth = hclust_meth , cmat = cmat)
   
   PVlistout = lapply(cutheight, function(CH){    
       ## identify the PVs (independent principal variables)

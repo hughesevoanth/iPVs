@@ -11,6 +11,7 @@ VarRep <- function(wdata, cor_method = "spearman"){
 
 	## build a correaltion matrix based on Spearman's regression
 	R <- Hmisc::rcorr(as.matrix( wdata ), type = cor_method )$r
+	R[is.na(R)] = 0
 	## the sum of R-squared
 	sumR2 = colSums(R*R)
 
@@ -18,7 +19,7 @@ VarRep <- function(wdata, cor_method = "spearman"){
 		
 		## estimate how much of the total variance
 		## can be explained by each variable - alone - in turn
-		varexp = sapply(1:ncol(wdata), function(i){
+		varexp = sapply(1:ncol(R), function(i){
 			v = R[i,-i]
 			remaining_R = R[-i, -i]
 			remaining_R = remaining_R - (v %*% t(v))
@@ -37,10 +38,11 @@ VarRep <- function(wdata, cor_method = "spearman"){
 		## loop
 		iterR = R
 		for(i in 1:c(ncol(iterR)-1) ){
+		  print(i)
 			nvar <- nrow(iterR)
 			## sum of R-squared
 			sumR2 = colSums(iterR*iterR)
-			max_v = which(sumR2 == max(sumR2))
+			max_v = which(sumR2 == max(sumR2))[1]
 			var_name = names(sumR2)[max_v]
 			## total var
 			v = iterR[max_v,-max_v]
