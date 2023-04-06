@@ -38,7 +38,7 @@ VarRep <- function(wdata, cor_method = "spearman"){
 		## loop
 		iterR = R
 		for(i in 1:c(ncol(iterR)-1) ){
-		  print(i)
+		  # print(i)
 			nvar <- nrow(iterR)
 			## sum of R-squared
 			sumR2 = colSums(iterR*iterR)
