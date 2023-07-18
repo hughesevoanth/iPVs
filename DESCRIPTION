@@ -12,3 +12,7 @@ Imports:
 	RColorBrewer,
 	Hmisc
 RoxygenNote: 7.0.2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
