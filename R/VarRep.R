@@ -1,16 +1,17 @@
 #' Variable Representation - PVA
 #'
 #' This function estimates how much of the total variance can be explained by each variable independently, in turn
-#' @param wdata a data frame with your variable in columns and samples in rows.
-#' @param cor_method the type of regression to perform
+#' @param cormat your correlation matrix
 #' @keywords PVA, principal variables, variance explained
 #' @export
 #' @examples
 #' VarRep()
-VarRep <- function(wdata, cor_method = "spearman"){
+# VarRep <- function(wdata, cor_method = "spearman"){
+VarRep <- function(cormat){	
 
 	## build a correaltion matrix based on Spearman's regression
-	R <- Hmisc::rcorr(as.matrix( wdata ), type = cor_method )$r
+	# R <- Hmisc::rcorr(as.matrix( wdata ), type = cor_method )$r
+	R = cormat
 	R[is.na(R)] = 0
 	## the sum of R-squared
 	sumR2 = colSums(R*R)
@@ -27,16 +28,19 @@ VarRep <- function(wdata, cor_method = "spearman"){
 			vexp = 1 - ( sum( diag(remaining_R) ) / ncol(R))
 			})
 
-		## data out  (Maximum variance explained fby each variable individually.)
-		iVExp = data.frame(variable = colnames(wdata), initial_sumR2 = sumR2, VarExp_individually = varexp)
-
+		## data out  (Maximum variance explained by each variable individually.)
+		# iVExp = data.frame(variable = colnames(wdata), initial_sumR2 = sumR2, VarExp_individually = varexp)
+		iVExp = data.frame(variable = colnames(R), initial_sumR2 = sumR2, VarExp_individually = varexp)
+		o = order(iVExp$VarExp_individually, decreasing = TRUE)
+		iVExp = iVExp[o,]
 		#########################
 		## Perform a proper PVA
 		#########################
 		## an empty object
 		pva = c()
 		## loop
-		iterR = R
+		iterR = R[iVExp$variable, iVExp$variable]
+		
 		for(i in 1:c(ncol(iterR)-1) ){
 		  # print(i)
 			nvar <- nrow(iterR)
@@ -56,6 +60,7 @@ VarRep <- function(wdata, cor_method = "spearman"){
 			## redefine iterR
 			iterR = remaining_R
 		}
+		
 		###  which variable remains excluded from the pva list?
 		###  identify and add
 		last_var = colnames(R)[!colnames(R) %in% pva$var_name]

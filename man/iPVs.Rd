@@ -7,9 +7,10 @@
 iPVs(
   variabledata,
   cor_method = "spearman",
-  dist_method = "R2",
-  hclust_meth = "average",
-  cutheight = 0.5
+  dist_method = "R",
+  hclust_meth = "complete",
+  cutheight = 0.5,
+  cmat = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ iPVs(
 \item{hclust_meth}{the clustering method used by hclust}
 
 \item{cutheight}{tree cut height. Value is equal to a dissimilarity of 1 - Spearman's rho.}
+
+\item{cmat}{a correlation matrix you can pass to the function, which will skip the generation of a new matrix.}
 }
 \description{
 A super function that runs through all of the necessary staeps for you to identify Independent Principal Variables

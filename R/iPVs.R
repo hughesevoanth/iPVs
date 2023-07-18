@@ -6,12 +6,20 @@
 #' @param dist_method the distance method to generate the distance matrix
 #' @param hclust_meth the clustering method used by hclust
 #' @param cutheight tree cut height. Value is equal to a dissimilarity of 1 - Spearman's rho.
+#' @param cmat a correlation matrix you can pass to the function, which will skip the generation of a new matrix.
 #' @keywords data reduction, independent variables, principal variables, tree cut
 #' @export
 #' @examples
 #' iPVs()
 iPVs = function( variabledata, cor_method = "spearman", dist_method = "R", hclust_meth = "complete", cutheight = 0.5, cmat = NULL ){
 
+  
+  if(!is.null(cmat)){
+    match = sum( rownames(cmat) == colnames(variabledata) ) / nrow(cmat)
+    if(match != 1){
+      stop("Please make sure the row and column names of your provided correlation matrix match the column names of your provided data.frame")
+    }
+  }
   ## estimate correlation matrix, build tree, generate PCA from correlation matrix
   cat(paste0("(I) tree.builder -- \n"))
   wdata = tree.builder(variabledata, cor_method = cor_method, dist_method = dist_method, hclust_meth = hclust_meth , cmat = cmat)
@@ -41,7 +49,7 @@ iPVs = function( variabledata, cor_method = "spearman", dist_method = "R", hclus
       ## Perform a  PVA for the last time for for each of your iterative-super-clusters
       ##  and the VarExp by that top PV for the total variation of group members.
       cat(paste0("(IV) Kcluster_PVs -- identify the final set of PV for each cluster, and estimate the variance explained.\n"))
-      Final_PVA_results = Kcluster_PVs( variabledata = wdata$variabledata, Kmembers = PV_cluster_members, myPVs = mypvs )
+      Final_PVA_results = Kcluster_PVs( cmat = wdata$cormat, Kmembers = PV_cluster_members, myPVs = mypvs )
       
       ##############################
       ## place all of the useful data

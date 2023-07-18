@@ -25,7 +25,7 @@ ind.pvs = function( variabledata, tree, cormat, distmat, cutheight, hclust_meth 
     ## set.seed(20200224)
     
     ## identify the Principal Variables (PVs)
-    PVs = treecut.pvs( tree = tree, variabledata = variabledata, cutheight = cutheight)
+    PVs = treecut.pvs( tree = tree, variabledata = variabledata, cutheight = cutheight, cormat = cormat)
     
     ## add the k cluster identifiers to the list object Kclusters
     title = paste0("treecut.pvs_iteration_", i)

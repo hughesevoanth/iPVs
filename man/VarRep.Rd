@@ -4,12 +4,10 @@
 \alias{VarRep}
 \title{Variable Representation - PVA}
 \usage{
-VarRep(wdata, cor_method = "spearman")
+VarRep(cormat)
 }
 \arguments{
-\item{wdata}{a data frame with your variable in columns and samples in rows.}
-
-\item{cor_method}{the type of regression to perform}
+\item{cormat}{your correlation matrix}
 }
 \description{
 This function estimates how much of the total variance can be explained by each variable independently, in turn

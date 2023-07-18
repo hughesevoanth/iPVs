@@ -49,9 +49,10 @@ Once you have installed the moosefun package as described above, open an R sessi
 	s = seq(0.1, 0.5, by = 0.1)
 	mypvs = iPVs(wdata, 
 		cor_method = "spearman", 				## you can choose spearman or pearson
-		dist_method = "R2", 					## you can choose 'R' (1-abs(R)) or 'R2' (R*R)
-		hclust_meth = "average", 				## you can choose 'complete', 'average' (UPGMA), or 'mcquitty' (WPGMA)
-		cutheight  = c(0.2, 0.3, 0.4, 0.5) 			## 1 or a series of cut heights
+		dist_method = "R", 					    ## you can choose 'R' (1-abs(R)) or 'R2' (R*R)
+		hclust_meth = "complete", 				## you can choose 'complete', 'average' (UPGMA), or 'mcquitty' (WPGMA)
+		cutheight  = c(0.2, 0.3, 0.4, 0.5),     ## 1 or a series of cut heights
+		cmat = NULL) 			                ## you can provide your own correlation matrix, which can save time.
 		)
 	
 	## Done !

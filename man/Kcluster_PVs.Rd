@@ -4,10 +4,10 @@
 \alias{Kcluster_PVs}
 \title{A function to identify the Principal Variable of a group}
 \usage{
-Kcluster_PVs(variabledata, Kmembers, myPVs)
+Kcluster_PVs(cmat, Kmembers, myPVs)
 }
 \arguments{
-\item{variabledata}{a data.frame of the variable data used to build your cormat and hclust tree}
+\item{cmat}{a correlation matrix you can pass to the function, which will skip the generation of a new matrix.}
 
 \item{Kmembers}{a list, where each object in the list is a vector of variable IDs, identifying the members of a cluster or group.}
 

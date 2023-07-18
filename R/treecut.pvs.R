@@ -3,12 +3,13 @@
 #' This function to identify the principal variables in your variable data set, given a defined tree cut height. 
 #' @param tree a hclust object of you variables, built with the cormat and the hclust method "complete"
 #' @param variabledata your data.frame of variables used to generate your tree
+#' @param cormat your correlation matrix
 #' @param cutheight the height at which you wish to cut your tree 
 #' @keywords tree cut, principal variables
 #' @export
 #' @examples
 #' treecut.pvs()
-treecut.pvs = function( tree, variabledata , cutheight ){
+treecut.pvs = function( tree, variabledata, cutheight, cormat ){
   ##############  check for hclust object
   if(class(tree) != "hclust"){
     stop("You must pass a hclust object as the tree variable")
@@ -40,8 +41,8 @@ treecut.pvs = function( tree, variabledata , cutheight ){
     pvs = t( sapply(groupKs, function(i){
       n = names( which(k == i) )
       if(length(n)>1){
-        tempd = variabledata[, n]
-        ##
+        # tempd = variabledata[, n]
+        tempd = cormat[n,n]
         #topPV =  PVA( names(tempd), tempd)
         topPV = VarRep(tempd)
         out = data.frame(k = i, clusN = table(k)[i],  PV = as.character(topPV$variable)[1], VarExp = topPV$added_vexp[1])

@@ -1,12 +1,16 @@
 #' A superfunction to estimate correlations and relationships among variables in a data set. 
 #'
 #' This function estimates a Spearman's correlation matrix, an abs(distance matrix), a hclust tree, a PCA from the correlation matrix, and numerous estimates of the effective number of variables in a data set (Me)
-#' @param variabledata a vector of class categorical, for all elements tested, identifying a category | or bin | box that each element belong to
+#' @param wdata a data.frame of the variable data used to build your cormat and hclust tree, the variables should be in columns, samples in rows.
+#' @param cor_method the correlation method used to construct the correlation matrix
+#' @param dist_method the distance method to generate the distance matrix
+#' @param hclust_meth the clustering method used by hclust
+#' @param cmat a correlation matrix you can pass to the function, which will skip the generation of a new matrix.
 #' @keywords correaltion matrix, distance matrix, hclust, Me
 #' @export
 #' @examples
 #' tree.builder()
-tree.builder = function( wdata, cor_method = "spearman", dist_method = "R", hclust_meth = "average", cmat = NULL ){
+tree.builder = function( wdata, cor_method = "spearman", dist_method = "R", hclust_meth = "complete", cmat = NULL ){
     
     ## number of variables
     M = ncol(wdata)
@@ -40,19 +44,21 @@ tree.builder = function( wdata, cor_method = "spearman", dist_method = "R", hclu
 
     ## generate a hclust dendrogram
     cat("3. generating dendrogram\n")
-    if(hclust_meth == "complete"){
-        tree = hclust(dmat,  method = "complete")
-    } else {
-        if(hclust_meth == "average"){
-            tree = hclust(dmat,  method = "average")
-        } else { 
-            if(hclust_meth == "mcquitty"){
-                tree = hclust(dmat,  method = "mcquitty")
-            } else { 
-                stop("The hclust_meth must be either 'complete' (max dist), 'average' (UPGMA), or 'mcquitty' (WPGMA).")
-            }
-        }
-    }
+    tree = hclust(dmat,  method = hclust_meth)
+
+    # if(hclust_meth == "complete"){
+    #     tree = hclust(dmat,  method = "complete")
+    # } else {
+    #     if(hclust_meth == "average"){
+    #         tree = hclust(dmat,  method = "average")
+    #     } else { 
+    #         if(hclust_meth == "mcquitty"){
+    #             tree = hclust(dmat,  method = "mcquitty")
+    #         } else { 
+    #             stop("The hclust_meth must be either 'complete' (max dist), 'average' (UPGMA), or 'mcquitty' (WPGMA).")
+    #         }
+    #     }
+    # }
 
     ## eigenvalues
     cat("4. estimating eigenvalues from correlation matrix\n")
@@ -81,8 +87,13 @@ tree.builder = function( wdata, cor_method = "spearman", dist_method = "R", hclu
     
     ## data out
     out = list( variabledata = wdata, 
-        cormat = cmat, distmat = dmat, tree = tree, 
-        pca = pca, eigenvalues = eigenvalues,  varexp = varexp, simpleM = simpleM
+        cormat = cmat, 
+        distmat = dmat, 
+        tree = tree, 
+        pca = pca, 
+        eigenvalues = eigenvalues,  
+        varexp = varexp, 
+        simpleM = simpleM
        )
     ## return data
     return(out)

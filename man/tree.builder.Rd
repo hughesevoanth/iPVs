@@ -7,12 +7,21 @@
 tree.builder(
   wdata,
   cor_method = "spearman",
-  dist_method = "R2",
-  hclust_meth = "average"
+  dist_method = "R",
+  hclust_meth = "complete",
+  cmat = NULL
 )
 }
 \arguments{
-\item{variabledata}{a vector of class categorical, for all elements tested, identifying a category | or bin | box that each element belong to}
+\item{wdata}{a data.frame of the variable data used to build your cormat and hclust tree, the variables should be in columns, samples in rows.}
+
+\item{cor_method}{the correlation method used to construct the correlation matrix}
+
+\item{dist_method}{the distance method to generate the distance matrix}
+
+\item{hclust_meth}{the clustering method used by hclust}
+
+\item{cmat}{a correlation matrix you can pass to the function, which will skip the generation of a new matrix.}
 }
 \description{
 This function estimates a Spearman's correlation matrix, an abs(distance matrix), a hclust tree, a PCA from the correlation matrix, and numerous estimates of the effective number of variables in a data set (Me)
